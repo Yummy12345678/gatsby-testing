@@ -16,5 +16,15 @@ pipeline {
                 }
             }
         }
+        stage('Package') {
+          steps {
+                dir('/frontend') {
+                    // Build Docker image
+                    sh 'docker build -t gatsby-container .'
+                    
+               
+                }
+          }
+        }
     }
 }
