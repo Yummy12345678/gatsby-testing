@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Use the Docker tool
-                    docker.image('node:14').inside {
+                    MyDocker.image('node:14').inside {
                         sh 'npm install'
                     }
                 }
