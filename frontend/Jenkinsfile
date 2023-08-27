@@ -1,11 +1,16 @@
 pipeline {
     agent any
-    
+
+    tools {
+        // Use the name you configured for the Docker installation
+        dockerTool 'MyDocker'
+    }
+
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Run a Docker container and execute a command inside it
+                    // Use the Docker tool
                     docker.image('node:14').inside {
                         sh 'npm install'
                     }
