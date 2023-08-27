@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Use the name you configured for the Docker installation
-        dockerTool 'MyDocker'
+        dockerTool 'MyDockel'
     }
 
     stages {
