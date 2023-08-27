@@ -1,38 +1,16 @@
 pipeline {
     agent any
-
-    
     
     stages {
-        stage('Clone Repository') {
+        stage('Build') {
             steps {
                 script {
-                    // Cloning a Git repository with options
-                    def gitOptions = [
-                        credentialsId: 'PAT', // Optional: Use specific credentials from Jenkins
-                        url: 'https://github.com/Yummy12345678/gatsby-testing.git',
-                        branch: 'main', // Optional: Specify a specific branch
-                        changelog: true // Optional: Include changelog in build
-                    ]
-                    git gitOptions
+                    // Run a Docker container and execute a command inside it
+                    docker.image('node:14').inside {
+                        sh 'npm install'
+                    }
                 }
             }
-        }
-        stage('Package') {
-          agent {
-            docker {
-              image 'postgres:13-apline'
-              reuseNode true
-            }
-          }
-          steps {
-                dir('frontend') {
-                    // Build Docker image
-                    sh 'docker build -t gatsby-container .'
-                    
-               
-                }
-          }
         }
     }
 }
