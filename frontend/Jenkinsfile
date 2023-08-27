@@ -1,12 +1,18 @@
 pipeline {
     agent any
 
-        tools {
-        // Make sure this name matches the name in your tool configuration
-        dockerTool 'Docker'
-    }
+
     
     stages {
+              stage('Check Docker Version') {
+            steps {
+                script {
+                    def dockerToolInstallation = tool name: 'Docker', type: 'ToolType'
+                    def dockerVersionOutput = sh(script: "${dockerToolInstallation}/docker --version", returnStdout: true).trim()
+                    echo "Docker Version: ${dockerVersionOutput}"
+                }
+            }
+              }
         stage('Clone Repository') {
             steps {
                 script {
