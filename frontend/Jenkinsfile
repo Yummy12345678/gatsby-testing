@@ -17,6 +17,12 @@ pipeline {
             }
         }
         stage('Package') {
+          agent {
+            docker {
+              image 'postgres:13-apline'
+              reuseNode true
+            }
+          }
           steps {
                 dir('frontend') {
                     // Build Docker image
