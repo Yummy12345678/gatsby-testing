@@ -26,11 +26,10 @@ pipeline {
             }
           }
           steps {
-                dir('frontend') {
-                    // Build Docker image
-                    sh 'docker build -t gatsby-container .'
-                    
-               
+                          script {
+                    docker.image('your-docker-image').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        // Your Docker-related commands here
+                    }
                 }
           }
         }
