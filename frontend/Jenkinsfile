@@ -1,20 +1,20 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Hello Stage') {
-          steps {
-                            script {
+        stage('Clone Repository') {
+            steps {
+                script {
                     // Cloning a Git repository with options
                     def gitOptions = [
-                        credentialsId: 'PGHAT', // Optional: Use specific credentials from Jenkins
+                        credentialsId: 'PAT', // Optional: Use specific credentials from Jenkins
                         url: 'https://github.com/Yummy12345678/gatsby-testing.git',
                         branch: 'main', // Optional: Specify a specific branch
                         changelog: true // Optional: Include changelog in build
                     ]
                     git gitOptions
                 }
-        }
+            }
         }
     }
 }
