@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+        tools {
+        // Make sure this name matches the name in your tool configuration
+        dockerTool 'Docker'
+    }
     
     stages {
         stage('Clone Repository') {
