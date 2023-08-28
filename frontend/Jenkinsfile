@@ -1,13 +1,39 @@
-node {
-    def dockerImage
+pipeline {
+    agent any
 
-    stage('Build Docker Image') {
-        dockerImage = docker.build('my-docker-image', './path/to/Dockerfile')
-    }
-
-    stage('Publish Docker Image') {
-        docker.withRegistry('https://docker.registry.url', 'docker-credentials-id') {
-            dockerImage.push()
+    
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                script {
+                    sh 'docker -v'
+                    // Cloning a Git repository with options
+                    def gitOptions = [
+                        credentialsId: 'PAT', // Optional: Use specific credentials from Jenkins
+                        url: 'https://github.com/Yummy12345678/gatsby-testing.git',
+                        branch: 'main', // Optional: Specify a specific branch
+                        changelog: true // Optional: Include changelog in build
+                    ]
+                    git gitOptions
+                }
+            }
+        }
+        stage('Package') {
+          agent {
+            docker {
+              image 'postgres:20-apline'
+              reuseNode true
+            }
+          }
+          steps {
+                dir('frontend') {
+                    // Build Docker image
+                    sh 'docker build -t gatsby-container .'
+                    
+               
+                }
+          }
         }
     }
 }
