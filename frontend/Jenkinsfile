@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Start Docker container
-                    def dockerContainer = docker.image('your-docker-image').run("-p 8080:80")
+                    def dockerContainer = docker.image('your-docker-image').run("-p 8080:8080")
                     
                     // Run commands inside the Docker container
                     dockerContainer.inside {
