@@ -7,6 +7,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
+                    sh 'docker -v'
                     // Cloning a Git repository with options
                     def gitOptions = [
                         credentialsId: 'PAT', // Optional: Use specific credentials from Jenkins
@@ -26,10 +27,11 @@ pipeline {
             }
           }
           steps {
-                          script {
-                    docker.image('your-docker-image').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
-                        // Your Docker-related commands here
-                    }
+                dir('frontend') {
+                    // Build Docker image
+                    sh 'docker build -t gatsby-container .'
+                    
+               
                 }
           }
         }
